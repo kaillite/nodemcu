@@ -1,18 +1,13 @@
-/* Website
-  
- You can use following structure to put website into Arduino code:
-    String webPage = R"=====(content of web page )=====";
- and you don't have to care about: ' " # < > / \  
- 
- So below is Website code
-  */
+/*
+웹 사이트 코드입니다.
+*/
 
 String webPage = R"=====(
   <!DOCTYPE HTML>
   <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> //익스플로러 호환성 익스플로러 테스트시 출력되지 않아서 추가함
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LED CONTROLLER</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,900&subset=latin-ext" rel="stylesheet">
@@ -25,7 +20,7 @@ String webPage = R"=====(
       font-size: 15px;
       margin: 5px;
       border-radius: 30px;
-      -webkit-transition-duration: 0.4s; /* Safari */
+      -webkit-transition-duration: 0.4s; // 맥에서 테스트
       transition-duration: 0.2s;
       cursor: pointer;
       text-align: center;
