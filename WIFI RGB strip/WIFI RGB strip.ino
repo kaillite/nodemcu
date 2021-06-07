@@ -13,14 +13,13 @@ SMD 5050 기준으로 만들어져 있음
 #include <ESP8266mDNS.h>
 #include "Color.h"
 #include "mainpage.h"
- // OTA Includes
- #include <ArduinoOTA.h>
+#include <ArduinoOTA.h>
 
 
 /* 네트워크 */
 const char* ssid = "kaillite"; // 와이파이 이름
 const char* password = "qwer3467"; // 와이파이 비번 
-const char* device_name = "WiFi LED strip"; // you can access controller by http://led.local/
+const char* device_name = "WiFi LED strip"; // 기기이름
 IPAddress ip(192,168,1,175);  // 고정 iP할당 
 IPAddress gateway(192,168,1,1); //기본 게이트 웨이
 IPAddress subnet(255,255,255,0); // 네트워크 넷마스크
@@ -30,7 +29,7 @@ const int greenLED = 2;  // D2 GPIO2
 const int blueLED = 4;  // D4 GPIO4
 
 
-/* Objects */
+/*서버포트*/
 MDNSResponder mdns;
 ESP8266WebServer server(80);
 
@@ -43,34 +42,31 @@ void setup(void) {
 
   delay(1000);
 
-  /* Begin some (un)important things */
   Serial.begin(115200);
   WiFi.begin(ssid, password);
   WiFi.config(ip, gateway, subnet);
   Serial.println("");
-  // OTA code
   ArduinoOTA.setHostname("LEDStrip");
   ArduinoOTA.setPassword((const char *)"qwer3467");
   ArduinoOTA.begin();
-  /* Wait for WiFi connection */
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
 
-  /* Show some important information on Serial Monitor */
+  /* 시리얼 모니터 정보 표시 */
   Serial.println("");
   Serial.print("Connected to ");
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-   /* Give name for the device */
+   /* 기기이름 */
   if (mdns.begin(device_name, WiFi.localIP())) {
     Serial.println("MDNS responder started");
   }
 
-  /* Show website (in browser), than send RGB code */
+ /*웹사이트->LED 컨트롤*/
   server.on("/", []() {
     server.send(200, "text/html", webPage);
     Serial.println("Loaded main page");
@@ -243,7 +239,6 @@ void setup(void) {
   });
   server.on("/smooth", []() {
     server.send(200, "text/html", webPage);
-    //irsend.sendNEC(IR_SMOOTH, 32);
     Serial.print("Pressed: ");
     Serial.println("smooth");
     delay(1000);
