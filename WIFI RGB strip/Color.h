@@ -1,6 +1,5 @@
 /*
-Joe Mulhern 2017
-PWM colors for strips. Make with RGB LEDs
+기존 LED 코드 복사 TV ambilight 만들기
 */
 #ifndef Color_h
 #define Color_h
